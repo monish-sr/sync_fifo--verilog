@@ -1,1 +1,1 @@
-# sync_fifo--verilog
+# Design and Testbench for Synchronous FIFO using Verilog
