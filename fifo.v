@@ -1,6 +1,7 @@
 module fifo #(parameter depth = 4, width = 3, ptr_width = $clog2(depth)) 
 (clk_i,rst_i,wr_en_i,rd_en_i,wdata_i,rdata_o,full_o,empty_o,overflow_o,underflow_o);
-	
+
+	//Input and Output Declaration
 	input clk_i,rst_i,wr_en_i,rd_en_i;
 	input [width-1:0] wdata_i;
 	
@@ -13,7 +14,9 @@ module fifo #(parameter depth = 4, width = 3, ptr_width = $clog2(depth))
 	reg [width-1:0] fifo [depth-1:0];
 	integer i;
 
+	// Wave toggles when Falling Edge
 	always@(negedge clk_i) begin
+		//if rst is active (used synchronous active high rst)
 		 if(rst_i) begin
 			  full_o <= 0;
 			  empty_o <= 1;
@@ -26,6 +29,7 @@ module fifo #(parameter depth = 4, width = 3, ptr_width = $clog2(depth))
 			  for(i=0;i<depth;i=i+1) fifo[i] <= 0;
 		 end
 		 else begin
+			 //if rst is inactive
 			  if(wr_en_i) begin
 				   if (full_o) overflow_o <= 1;
 				   else begin
